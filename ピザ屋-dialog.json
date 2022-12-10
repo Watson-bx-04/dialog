@@ -1,0 +1,800 @@
+{
+  "intents": [
+    {
+      "intent": "キャンセル",
+      "examples": [
+        {
+          "text": "注文をキャンセルしたい"
+        },
+        {
+          "text": "注文を取りやめる"
+        }
+      ],
+      "description": "ご注文のキャンセル"
+    },
+    {
+      "intent": "割引条件",
+      "examples": [
+        {
+          "text": "お持ち帰りしたら半額ですか"
+        },
+        {
+          "text": "割引条件"
+        },
+        {
+          "text": "取りに行けば半額ですか？"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "注文",
+      "examples": [
+        {
+          "text": "ピザが食べたいです"
+        },
+        {
+          "text": "ピザの注文"
+        }
+      ],
+      "description": "ご注文"
+    }
+  ],
+  "entities": [
+    {
+      "entity": "no",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "いいえ",
+          "synonyms": []
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "sys-date",
+      "values": []
+    },
+    {
+      "entity": "sys-number",
+      "values": []
+    },
+    {
+      "entity": "sys-time",
+      "values": []
+    },
+    {
+      "entity": "yes",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "はい",
+          "synonyms": []
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "サイズ",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "Lサイズ",
+          "synonyms": [
+            "L"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "Mサイズ",
+          "synonyms": [
+            "M"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "Sサイズ",
+          "synonyms": [
+            "S"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "種類",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "シーフード",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "チーズ",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "チリコンカーン",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "テリヤキ",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "ペパロニ",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "マルゲリータ",
+          "synonyms": []
+        }
+      ],
+      "fuzzy_match": true
+    }
+  ],
+  "metadata": {
+    "api_version": {
+      "major_version": "v2",
+      "minor_version": "2018-11-08"
+    },
+    "from-sample": true
+  },
+  "webhooks": [
+    {
+      "url": "",
+      "name": "main_webhook",
+      "headers": []
+    }
+  ],
+  "dialog_nodes": [
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "最初からお願いします"
+              }
+            ],
+            "response_type": "text"
+          }
+        ]
+      },
+      "parent": "slot_97_1669899767901",
+      "context": {
+        "size": null,
+        "time": null,
+        "pizza": null,
+        "confirmation": null
+      },
+      "conditions": "@no",
+      "event_name": "filled",
+      "dialog_node": "handler_100_1669899767901",
+      "previous_sibling": "handler_99_1669899767901"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "ピザの種類、サイズ、配達時間を教えてください。"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_70_1669899767901",
+      "disabled": true,
+      "event_name": "focus",
+      "dialog_node": "handler_101_1669899767901"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_83_1669899767901",
+      "context": {
+        "pizza": "@種類"
+      },
+      "conditions": "@種類",
+      "event_name": "input",
+      "dialog_node": "handler_84_1669899767901"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "ピザの種類を教えて"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "multiline"
+          },
+          {
+            "title": "当店おすすめのピザ",
+            "options": [
+              {
+                "label": "マルゲリータ",
+                "value": {
+                  "input": {
+                    "text": "マルゲリータ"
+                  }
+                }
+              },
+              {
+                "label": "シーフード",
+                "value": {
+                  "input": {
+                    "text": "シーフード"
+                  }
+                }
+              },
+              {
+                "label": "ペパロニ",
+                "value": {
+                  "input": {
+                    "text": "ペパロニ"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "parent": "slot_83_1669899767901",
+      "event_name": "focus",
+      "dialog_node": "handler_85_1669899767901",
+      "previous_sibling": "handler_84_1669899767901"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "<? $pizza ?>・ピザですね"
+              }
+            ],
+            "response_type": "text"
+          }
+        ]
+      },
+      "parent": "slot_83_1669899767901",
+      "conditions": "$pizza",
+      "event_name": "filled",
+      "dialog_node": "handler_87_1669899767901",
+      "previous_sibling": "handler_85_1669899767901"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_88_1669899767901",
+      "context": {
+        "size": "@サイズ"
+      },
+      "conditions": "@サイズ",
+      "event_name": "input",
+      "dialog_node": "handler_89_1669899767901"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "ピザのサイズを教えてください"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "multiline"
+          },
+          {
+            "title": "ピザのサイズ",
+            "options": [
+              {
+                "label": "Lサイズ",
+                "value": {
+                  "input": {
+                    "text": "L"
+                  }
+                }
+              },
+              {
+                "label": "Mサイズ",
+                "value": {
+                  "input": {
+                    "text": "M"
+                  }
+                }
+              },
+              {
+                "label": "Sサイズ",
+                "value": {
+                  "input": {
+                    "text": "S"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "parent": "slot_88_1669899767901",
+      "event_name": "focus",
+      "dialog_node": "handler_90_1669899767901",
+      "previous_sibling": "handler_89_1669899767901"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "<? $size ?>ですね"
+              }
+            ],
+            "response_type": "text"
+          }
+        ]
+      },
+      "parent": "slot_88_1669899767901",
+      "conditions": "$size",
+      "event_name": "filled",
+      "dialog_node": "handler_92_1669899767901",
+      "previous_sibling": "handler_90_1669899767901"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_93_1669899767901",
+      "context": {
+        "time": "@sys-time"
+      },
+      "conditions": "@sys-time",
+      "event_name": "input",
+      "dialog_node": "handler_94_1669899767901"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "配達時間を教えて"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "slot_93_1669899767901",
+      "event_name": "focus",
+      "dialog_node": "handler_95_1669899767901",
+      "previous_sibling": "handler_94_1669899767901"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "<? ($time).reformatDateTime('a h:mm') ?>ですね"
+              }
+            ],
+            "response_type": "text"
+          }
+        ]
+      },
+      "parent": "slot_93_1669899767901",
+      "conditions": "$time",
+      "event_name": "filled",
+      "dialog_node": "handler_96_1669899767901",
+      "previous_sibling": "handler_95_1669899767901"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_97_1669899767901",
+      "context": {
+        "undefined": "(#yes || #no) && slot_in_focus",
+        "confirmation": "(@yes || @no) && slot_in_focus"
+      },
+      "conditions": "(@yes || @no) && slot_in_focus",
+      "event_name": "input",
+      "dialog_node": "handler_98_1669899767901"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "ご注文内容\n・ピザ: <? $pizza ?>\n・サイズ: <? $size ?>\n・配達時間: <? ($time).reformatDateTime('a hh:mm') ?>\n以上で、でよろしいですか？"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "multiline"
+          },
+          {
+            "title": "注文の確認",
+            "options": [
+              {
+                "label": "はい",
+                "value": {
+                  "input": {
+                    "text": "はい"
+                  }
+                }
+              },
+              {
+                "label": "いいえ",
+                "value": {
+                  "input": {
+                    "text": "いいえ"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "parent": "slot_97_1669899767901",
+      "event_name": "focus",
+      "dialog_node": "handler_99_1669899767901",
+      "previous_sibling": "handler_98_1669899767901"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "お持ち帰りの場合はピザの価格は半額になります。(Dialog)"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "metadata": {
+        "_customization": {
+          "mcr": false
+        }
+      },
+      "conditions": "#割引条件",
+      "dialog_node": "node_2_1670577169070",
+      "previous_sibling": "node_5_1623163262776"
+    },
+    {
+      "type": "standard",
+      "title": "ピザの注文",
+      "output": {
+        "generic": []
+      },
+      "context": {
+        "size": null,
+        "time": null,
+        "pizza": null,
+        "confirmation": null
+      },
+      "next_step": {
+        "behavior": "skip_user_input"
+      },
+      "conditions": "#注文 || @種類",
+      "dialog_node": "node_4_1670547475946",
+      "previous_sibling": "ようこそ"
+    },
+    {
+      "type": "standard",
+      "parent": "node_5_1623163262776",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "$pizza != null",
+      "dialog_node": "node_4_1670548053744"
+    },
+    {
+      "type": "standard",
+      "title": "注文のキャンセル",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "#キャンセル",
+      "dialog_node": "node_5_1623163262776",
+      "previous_sibling": "node_4_1670547475946"
+    },
+    {
+      "type": "frame",
+      "title": "ピザの注文",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "(確定) ご注文内容\n・ピザ: <? $pizza ?>・ピザ\n・サイズ: <? $size ?>\n・配達時間: <? ($time).reformatDateTime('a hh:mm') ?>\n\nで注文を受け付けました。"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "multiline"
+          }
+        ]
+      },
+      "parent": "node_4_1670547475946",
+      "metadata": {
+        "_customization": {
+          "mcr": false
+        }
+      },
+      "conditions": "($pizza == null && $size == null && $time == null)",
+      "dialog_node": "node_70_1669899767901"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "こちらのご注文をキャンセルしました"
+              },
+              {
+                "text": "キャンセルしたご注文内容\n・ピザ: <? $pizza ?>\n・サイズ: <? $size ?>\n・配達時間: <? ($time).reformatDateTime('a hh:mm') ?>"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "multiline"
+          }
+        ]
+      },
+      "parent": "node_4_1670548053744",
+      "conditions": "@yes",
+      "dialog_node": "response_10_1670548061804"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "(確定) ご注文内容\n・ピザ: <? $pizza ?>・ピザ\n・サイズ: <? $size ?>\n・配達時間: <? ($time).reformatDateTime('a hh:mm') ?>\n\nで注文を受け付けました。"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "multiline"
+          }
+        ]
+      },
+      "parent": "node_70_1669899767901",
+      "disabled": true,
+      "dialog_node": "response_103_1669899767901",
+      "previous_sibling": "handler_101_1669899767901"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "ご注文をいただいておりません"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_5_1623163262776",
+      "dialog_node": "response_2_1669902456517",
+      "previous_sibling": "response_6_1669902439362"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "ご注文内容\n・ピザ: <? $pizza ?>\n・サイズ: <? $size ?>\n・配達時間: <? ($time).reformatDateTime('a hh:mm') ?>"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "multiline"
+          },
+          {
+            "title": "こちらのご注文のキャンセルですね？",
+            "options": [
+              {
+                "label": "はい",
+                "value": {
+                  "input": {
+                    "text": "はい"
+                  }
+                }
+              },
+              {
+                "label": "いいえ",
+                "value": {
+                  "input": {
+                    "text": "いいえ"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "parent": "node_5_1623163262776",
+      "conditions": "$pizza != null",
+      "dialog_node": "response_6_1669902439362",
+      "previous_sibling": "node_4_1670548053744"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "予定通り、<? ($time).reformatDateTime('a hh:mm') ?>にお届けいたします"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_4_1670548053744",
+      "conditions": "@no",
+      "dialog_node": "response_6_1670548106184",
+      "previous_sibling": "response_10_1670548061804"
+    },
+    {
+      "type": "slot",
+      "output": {},
+      "parent": "node_70_1669899767901",
+      "variable": "$pizza",
+      "dialog_node": "slot_83_1669899767901",
+      "previous_sibling": "response_103_1669899767901"
+    },
+    {
+      "type": "slot",
+      "output": {},
+      "parent": "node_70_1669899767901",
+      "variable": "$size",
+      "dialog_node": "slot_88_1669899767901",
+      "previous_sibling": "slot_83_1669899767901"
+    },
+    {
+      "type": "slot",
+      "output": {},
+      "parent": "node_70_1669899767901",
+      "variable": "$time",
+      "dialog_node": "slot_93_1669899767901",
+      "previous_sibling": "slot_88_1669899767901"
+    },
+    {
+      "type": "slot",
+      "output": {},
+      "parent": "node_70_1669899767901",
+      "variable": "$confirmation",
+      "dialog_node": "slot_97_1669899767901",
+      "previous_sibling": "slot_93_1669899767901"
+    },
+    {
+      "type": "standard",
+      "title": "その他",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "解釈できませんでした。申し訳ありませんが違う表現を試していただけますか。"
+              },
+              {
+                "text": "恐れ入りますが表現を変えていただけますか。解釈できませんでした。"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "anything_else",
+      "digress_in": "returns",
+      "dialog_node": "その他",
+      "digress_out": "allow_all",
+      "previous_sibling": "node_2_1670577169070",
+      "disambiguation_opt_out": true
+    },
+    {
+      "type": "standard",
+      "title": "ようこそ",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "いらっしゃいませ。ご用件をどうぞ。"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "context": {},
+      "conditions": "welcome",
+      "dialog_node": "ようこそ"
+    }
+  ],
+  "counterexamples": [
+    {
+      "text": "アメリカのピザの特徴は"
+    },
+    {
+      "text": "ピザの日はいつ"
+    },
+    {
+      "text": "ピザの歴史を教えて"
+    },
+    {
+      "text": "宅配ピザはどこが始めたの"
+    },
+    {
+      "text": "日本のピザ売上高は"
+    }
+  ],
+  "system_settings": {
+    "nlp": {
+      "model": "latest"
+    },
+    "disambiguation": {
+      "prompt": "もしかして",
+      "enabled": true,
+      "randomize": true,
+      "max_suggestions": 5,
+      "suggestion_text_policy": "title",
+      "none_of_the_above_prompt": "上記のいずれにも該当しない"
+    },
+    "human_agent_assist": {
+      "prompt": "もしかして"
+    }
+  },
+  "learning_opt_out": false,
+  "name": "ピザ屋",
+  "language": "ja",
+  "description": ""
+}
